@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block page_title %} CVMOJO {% endblock %}</title>
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
     <script src="/static/js/jquery-2.1.4.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/masonry.pkgd.min.js"></script>
     {% block extrahead %}
     {% endblock %}
 </head>
@@ -19,10 +21,16 @@
     </head>
 
     <body>
-        <h1>Hai salut</h1>
-        <a href="/">Home</a> | <a href="/search">Search</a>
-        {% block content %}
-        {% endblock %}
+      <div class="container">
+        <div class="row row-centered">
+          <div id="main" class="col-md-12">
+            <h1>Hai salut</h1>
+            <a href="/">Home</a> | <a href="/search">Search</a>
+            {% block content %}
+            {% endblock %}
+          </div>
+          </div>
+          </div>
     </body>
 
 </html>
