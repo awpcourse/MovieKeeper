@@ -18,3 +18,7 @@ def index(request):
     # We make use of the shortcut function to make our lives easier.
     # Note that the first parameter is the template we wish to use.
     return render(request, 'index.html', context_dict)
+
+def search(request):
+    context_dict = {'boldmessage': "I am bold font from the context"}
+    return render(request, 'search.html', context_dict)
