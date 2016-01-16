@@ -20,5 +20,6 @@ def index(request):
     return render(request, 'index.html', context_dict)
 
 def search(request):
-    context_dict = {'boldmessage': "I am bold font from the context"}
+    movies=[{"nume":"Mancare", "durata":120},{"nume":"test","durata":139}]
+    context_dict = {'boldmessage': "I am bold font from the context", "movies":movies}
     return render(request, 'search.html', context_dict)
