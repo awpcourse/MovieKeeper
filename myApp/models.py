@@ -23,7 +23,7 @@ class Comment(models.Model):
     user = models.ForeignKey(User, related_name='user_comments')
     movie = models.ForeignKey(Movie, related_name='user_movies')
     dateTime = models.DateTimeField(auto_now_add=True)
-    Comment = models.TextField(null=True)
+    comment = models.TextField(null=True)
 
     class Meta:
         ordering = ['dateTime']
@@ -37,3 +37,4 @@ class WishList(models.Model):
 class WatchList(models.Model):
     user = models.ForeignKey(User, related_name='user_watchlists')
     movie = models.ForeignKey(Movie, related_name='movie_movies')
+
