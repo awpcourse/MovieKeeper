@@ -1,20 +1,29 @@
 {% extends 'layout.html' %}
 {% block content %}
 <div class="moviecontainer">
-    <span class="title">{{movie.title}}</span>
+    <h2>{{movie.name}}</h2>
+    <hr />
     <div class="moviepicture">
         <img src="{{ movie.picture }}" />
     </div>
 
-    <div class="moviedetails">
-        <span class="duration">{{movie.duration}}</span>
-        <span class="genre">{{movie.genre}}</span>
+    <div class="row">
+        <img style="width:95%;margin-bottom:10px;margin-left:10px;margin-right:10px" src="http://www.tccandler.com/wp-content/blogs.dir/7/files/2012/12/best-posters-of-all-time.jpg">
     </div>
+    <div class="row">
+       <h4>Durata: {{movie.duration|time:"H:i:s"}}<h4>
+    </div>
+    <div class="row">
+        <h4>Gen: {{movie.genre}}<h4>
+    </div>
+    <hr/>
     <div class="comments-section">
         {% for comment in comments %}
         <div class="comment">
-            <p>Autor: {{comment.user.username}}</p>
-            <p>Comentariu: {{comment.comment}}</p>
+            <blockquote>
+                <p>Autor: {{comment.user.username}}</p><br/>
+                <p>Comentariu: {{comment.comment}}</p>
+            </blockquote>
         </div>
         {% endfor %}
     </div>
@@ -23,7 +32,7 @@
         <form method="POST">
             {% csrf_token %}
             {{commentform.as_p}}
-            <input type="submit" value="Adauga comentariu" />
+            <input type="submit" class="btn btn-primary pull-right" value="Adauga comentariu" />
         </form>
     </div>
 </div>

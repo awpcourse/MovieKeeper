@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block page_title %} CVMOJO {% endblock %}</title>
+    <title>{% block page_title %} Movie Keeper {% endblock %}</title>
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/css/style.css" rel="stylesheet">
     <script src="/static/js/jquery-2.1.4.min.js"></script>
@@ -23,9 +23,29 @@
     <body>
       <div class="container">
         <div class="row row-centered">
+            <nav class="navbar navbar-default" style="margin-top:20px;">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">Movie Keeper</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="/">Home</a>
+                        </li>
+                        <li>
+                            <a href="/search">Search</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'MoviesSeen' %}" name="moviesSeen">My Watchlist</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'wishlist' %}" name="wishlist">My wishlist</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
           <div id="main" class="col-md-12">
-            <h1>Hai salut</h1>
-            <a href="/">Home</a> | <a href="/search">Search</a>
+            
             {% block content %}
             {% endblock %}
           </div>

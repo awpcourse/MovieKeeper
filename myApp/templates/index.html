@@ -2,8 +2,27 @@
 {% block content %}
 hello world! <strong>{{ boldmessage }}</strong><br />
 <a href="{% url 'AddToWatchlist' pk=1 %}" type="submit" name="simulate">Add To Watchlist</a><br/>
-<a href="{% url 'MoviesSeen' %}" name="moviesSeen">My Watchlist</a><br />
 <a href="{% url 'AddToWishlist' pk=2 %}" name="addtowishlist">Add to my Wishlist</a><br />
-<a href="{% url 'wishlist' %}" name="wishlist">My wishlist</a><br />
-{{ commentform.as_p }}
+
+<div id="masonry" class="row grid">
+{% for movie in movies %}
+	<div class="col-md-3 col-xs-6 grid-item">
+		<div id="movieCell">
+			<img width="200px" style="margin-bottom:5px" src="{{movie.picture}}">
+			
+			<div class="row">
+				<b>{{ movie.name }}</b>
+			</div>
+			<div class="row">
+				<div>
+				<b> {{ movie.genre}}</b>	
+				</div>
+				<div>
+				<b> {{ movie.duration}}</b>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endfor %}
+</div>
 {% endblock %}
