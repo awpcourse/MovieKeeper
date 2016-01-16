@@ -4,7 +4,7 @@ from myApp.forms import MovieCommentForm
 from django.views.generic import TemplateView
 from myApp.models import Comment, Movie
 import datetime
-from myApp.models import Movie, WatchList
+from myApp.models import Movie, WatchList, WishList
 
 
 def index(request):
@@ -88,5 +88,44 @@ class AllMoviesSeen(TemplateView):
         context_dict = {
             'movies' : movies
             }
+   
+        return render(request, self.template_name, context_dict)
+
+class AddToWishlist(TemplateView):
+
+    template_name = 'index.html'
+
+    def get(self, request, pk):
+
+        movie = Movie.objects.get(pk=pk)
+        user = request.user
+
+        if WishList.objects.filter(movie=movie, user=user).count() > 0:
+            message = "Movie already in list!"
+        else:
+            wishlist = WishList(movie=movie, user=request.user)
+            wishlist.save()
+            message = "Movie added to wishlist"
+        
+        context_dict = {
+            'boldmessage': message 
+        }
 
         return render(request, self.template_name, context_dict)
+
+class MyWishlist(TemplateView):
+    
+    template_wishlist = 'wishlist.html'
+
+    def get(self, request):
+
+        user=request.user
+
+        movies=WishList.objects.filter(user=user).all()
+
+         
+        context_dict = {
+            'movies' : movies
+            }
+   
+        return render(request, self.template_wishlist, context_dict)

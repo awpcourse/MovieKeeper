@@ -1,8 +1,9 @@
 {% extends 'layout.html' %}
 {% block content %}
 hello world! <strong>{{ boldmessage }}</strong><br />
-<a href="{% url 'AddToWatchlist' pk=1 %}" type="submit" name="simulate">Simulate Watchlist</a>
+<a href="{% url 'AddToWatchlist' pk=1 %}" type="submit" name="simulate">Add To Watchlist</a><br/>
 <a href="{% url 'MoviesSeen' %}" name="moviesSeen">My Watchlist</a><br />
-<strong>{{ nume }}  {{ genre }}{{duration}}</strong> 
+<a href="{% url 'AddToWishlist' pk=2 %}" name="addtowishlist">Add to my Wishlist</a><br />
+<a href="{% url 'wishlist' %}" name="wishlist">My wishlist</a><br />
 {{ commentform.as_p }}
 {% endblock %}
