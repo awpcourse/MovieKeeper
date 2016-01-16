@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from myApp.forms import MovieCommentForm
-from django.views.generic.base import TemplateView
 from myApp.models import Movie, WatchList, Comment
+from django.views.generic import TemplateView
 import datetime
 
 
@@ -81,11 +81,11 @@ class AllMoviesSeen(TemplateView):
     def get(self, request):
         user = request.user
         movies = WatchList.objects.get(user=user)
-        movies=WatchList.objects.filter(user=user).all()
+        movies = WatchList.objects.filter(user=user).all()
         context_dict = {
             'nume': movieSeen.name,
             'genre': movieSeen.genre,
             'duration': movieSeen.duration,
-            'movies' : movies
+            'movies': movies
         }
         return render(request, self.template_name, context_dict)
