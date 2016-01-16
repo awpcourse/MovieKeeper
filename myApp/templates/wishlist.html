@@ -2,7 +2,8 @@
 {% block content %}
 
 {% for movie in movies %}
-	<strong>{{ movie.name }} {{ movie.genre }} {{movie.duration}}</strong> 
+	<br />	
+	<strong>{{ movie.movie.name }} {{ movie.movie.genre }} {{movie.movie.duration}}</strong> 
 {%endfor%}
-{{ commentform.as_p }}
+
 {% endblock %}

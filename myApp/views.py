@@ -2,10 +2,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from myApp.forms import MovieCommentForm, SearchMoviesForm
 from .utils import getMovies
-from myApp.models import Movie, WatchList, Comment
+from myApp.models import Movie, WatchList, Comment, WishList
 from django.views.generic import TemplateView
 import datetime
-
 
 def index(request):
     # Construct a dictionary to pass to the template engine as its context.
@@ -28,7 +27,7 @@ def search(request):
     searched=request.GET.get('search',None)
     myMovies=[]
 
-    #Search movies on API
+    # Search movies on API
     myMovies=getMovies(searched)
     print myMovies
     # print myMovies #movie['long imdb canonical title'], movie.movieID
@@ -71,7 +70,15 @@ class SimulateWatchlist(TemplateView):
 
     def get(self, request, pk):
 
-        movie = Movie.objects.get(pk=pk)
+        #movie = Movie.objects.get(pk=pk)
+        movie = Movie.objects.filter(imdbId=pk)
+
+        if movie:
+            movie = movie[0]
+        else:
+            movie = Movie(name=request.GET['name'], duration=datetime.datetime.now(), genre="Drama", imdbId=pk)
+            movie.save()
+
         user = request.user
 
         if WatchList.objects.filter(movie=movie, user=user).count() > 0:
@@ -85,7 +92,7 @@ class SimulateWatchlist(TemplateView):
             'boldmessage': message
         }
 
-        return render(request, self.template_name, context_dict)
+        return redirect('/moviedetails/{}'.format(movie.pk))
 
 
 class AllMoviesSeen(TemplateView):
@@ -93,9 +100,58 @@ class AllMoviesSeen(TemplateView):
     template_name = 'allMoviesSeen.html'
 
     def get(self, request):
+
         user = request.user
         movies = WatchList.objects.filter(user=user).all()
+        
         context_dict = {
-            'movies': movies
-        }
+            'movies' : movies
+            }
+   
         return render(request, self.template_name, context_dict)
+
+class AddToWishlist(TemplateView):
+
+    template_name = 'index.html'
+
+    def get(self, request, pk):
+
+        #movie = Movie.objects.get(pk=pk)
+        movie = Movie.objects.filter(imdbId=pk)
+
+        if movie:
+            movie = movie[0]
+        else:
+            movie = Movie(name=request.GET['name'], duration=datetime.datetime.now(), genre="Drama", imdbId=pk)
+            movie.save()
+
+        user = request.user
+
+        if WishList.objects.filter(movie=movie, user=user).count() > 0:
+            message = "Movie already in list!"
+        else:
+            wishlist = WishList(movie=movie, user=request.user)
+            wishlist.save()
+            message = "Movie added to wishlist"
+        
+        context_dict = {
+            'boldmessage': message 
+        }
+        return redirect('/moviedetails/{}'.format(movie.pk)) #render(request, self.template_name, context_dict)
+
+class MyWishlist(TemplateView):
+    
+    template_wishlist = 'wishlist.html'
+
+    def get(self, request):
+
+        user=request.user
+
+        movies=WishList.objects.filter(user=user).all()
+
+         
+        context_dict = {
+            'movies' : movies
+            }
+   
+        return render(request, self.template_wishlist, context_dict)
