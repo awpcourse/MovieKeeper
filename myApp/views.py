@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render
-from myApp.forms import MovieCommentForm
+from myApp.forms import MovieCommentForm, SearchMoviesForm
+from .utils import getMovies
 
 
 def index(request):
@@ -20,6 +21,18 @@ def index(request):
     return render(request, 'index.html', context_dict)
 
 def search(request):
-    movies=[{"nume":"Mancare", "durata":120},{"nume":"test","durata":139}]
-    context_dict = {'boldmessage': "I am bold font from the context", "movies":movies}
+    search_form = SearchMoviesForm()
+    searched=request.GET.get('search',None)
+    myMovies=[]
+
+    #Search movies on API
+    myMovies=getMovies(searched)
+    print myMovies
+    # print myMovies #movie['long imdb canonical title'], movie.movieID
+    # movies=[{"nume":"Mancare", "durata":120},{"nume":"test","durata":139}]
+    context_dict = {
+        'boldmessage': "I am bold font from the context",
+        "movies":myMovies,
+        'search_form': search_form
+    }
     return render(request, 'search.html', context_dict)

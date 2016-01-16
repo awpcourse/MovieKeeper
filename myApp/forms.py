@@ -5,3 +5,6 @@ class MovieCommentForm(Form):
     comment_text = CharField(widget=Textarea(
         attrs={'cols': 50, 'rows': 4, 'placeholder': 'Write a comment...'}),
         label='')
+
+class SearchMoviesForm(Form):
+    search = CharField(label="Search movies:")
