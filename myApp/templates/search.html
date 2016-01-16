@@ -1,10 +1,50 @@
 {% extends 'layout.html' %}
 {% block content %}
-<ul>
+
+<form method="GET">
+	{{search_form.as_p}}
+	<input type="submit" value="Search">
+  </form>
+
+<div id="masonry" class="row grid">
 {% for movie in movies %}
-	<li>
-		<b>{{ movie.nume }}</b>: {{ movie.durata }}
-	</li>
+	<div class="col-md-3 col-xs-6 grid-item">
+		<div id="movieCell">
+			<img width="200px" style="margin-bottom:5px" src="https://cdn.amctheatres.com/Media/Default/Images/noposter.jpg">
+			
+			<div class="row">
+				<b>{{ movie.name }}</b>
+			</div>
+			<div class="row">
+				<div>
+					Watchlist
+				</div>
+				<div>
+					Wishlist
+				</div>
+			</div>
+		</div>
+	</div>
 {% endfor %}
-</ul>
+</div>
+
+
+
+{% endblock %}
+
+{% block extrahead %}
+
+<script type="text/javascript">
+// $(document).ready(function(){
+	
+
+	setTimeout(function(){ $('.grid').masonry({
+	  itemSelector: '.grid-item',
+	  columnWidth: 210
+	}); }, 80);
+// })
+	
+
+
+</script>
 {% endblock %}

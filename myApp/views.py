@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from myApp.forms import MovieCommentForm
+from myApp.forms import MovieCommentForm, SearchMoviesForm
+# from .utils import getMovies
+from myApp.models import Movie, WatchList, Comment, WishList
 from django.views.generic import TemplateView
-from myApp.models import Comment, Movie
 import datetime
-from myApp.models import Movie, WatchList, WishList
-
 
 def index(request):
     # Construct a dictionary to pass to the template engine as its context.
@@ -24,9 +23,21 @@ def index(request):
 
 
 def search(request):
-    context_dict = {'boldmessage': "I am bold font from the context"}
-    return render(request, 'search.html', context_dict)
+    search_form = SearchMoviesForm()
+    searched=request.GET.get('search',None)
+    myMovies=[]
 
+    # Search movies on API
+    myMovies=getMovies(searched)
+    print myMovies
+    # print myMovies #movie['long imdb canonical title'], movie.movieID
+    # movies=[{"nume":"Mancare", "durata":120},{"nume":"test","durata":139}]
+    context_dict = {
+        'boldmessage': "I am bold font from the context",
+        "movies":myMovies,
+        'search_form': search_form
+    }
+    return render(request, 'search.html', context_dict)
 
 
 class moviedetails(TemplateView):
@@ -48,13 +59,15 @@ class moviedetails(TemplateView):
         movie = Movie.objects.get(pk=id)
         if form.is_valid():
             text = form.cleaned_data['comment_text']
-            comment = Comment(comment=text, movie=movie, user = request.user, dateTime = datetime.datetime.now())
+            comment = Comment(comment=text, movie=movie,
+                              user=request.user, dateTime=datetime.datetime.now())
             comment.save()
         return redirect('/moviedetails/{}'.format(id))
 
+
 class SimulateWatchlist(TemplateView):
     template_name = 'index.html'
-    
+
     def get(self, request, pk):
 
         movie = Movie.objects.get(pk=pk)
@@ -66,9 +79,9 @@ class SimulateWatchlist(TemplateView):
             watchlist = WatchList(movie=movie, user=request.user)
             watchlist.save()
             message = "Movie added to watchlist"
-        
+
         context_dict = {
-            'boldmessage': message 
+            'boldmessage': message
         }
 
         return render(request, self.template_name, context_dict)
@@ -80,11 +93,10 @@ class AllMoviesSeen(TemplateView):
 
     def get(self, request):
 
-        user=request.user
+        user = request.user
 
-        movies=WatchList.objects.filter(user=user).all()
-
-         
+        movies = WatchList.objects.filter(user=user).all()
+        
         context_dict = {
             'movies' : movies
             }
@@ -110,7 +122,6 @@ class AddToWishlist(TemplateView):
         context_dict = {
             'boldmessage': message 
         }
-
         return render(request, self.template_name, context_dict)
 
 class MyWishlist(TemplateView):

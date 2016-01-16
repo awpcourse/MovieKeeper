@@ -1,0 +1,46 @@
+#main{
+	margin: 0 auto;
+}
+
+#movieCell{
+	box-shadow: 0px 0px 5px gray;
+	width: 200px;
+	margin-bottom:10px;
+}
+
+#movieCell .row{
+	margin:0;
+	width: 200px;
+	margin-left:10px;
+	margin-right:10px;
+}
+
+#movies{
+
+}
+
+.grid {
+}
+
+/* clearfix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- grid-item ---- */
+
+.grid-item {
+  width: 210px;
+}
+
+.grid-item-content {
+  height: 100px;
+  background: #D26;
+  border: 2px solid hsla(0, 0%, 0%, 0.5);
+  border-radius: 5px;
+}
+
+.grid-item-content--height2 { height: 200px; }
+
