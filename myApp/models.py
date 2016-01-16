@@ -16,12 +16,14 @@ class Movie(models.Model):
         upload_to=get_image_path, blank=True, null=True)
     duration = models.TimeField()
     genre = models.TextField(max_length=50)
+    imdbId = models.IntegerField()
 
 
 class Comment(models.Model):
     user = models.ForeignKey(User, related_name='user_comments')
     movie = models.ForeignKey(Movie, related_name='user_movies')
     dateTime = models.DateTimeField(auto_now_add=True)
+    Comment = models.TextField(null=True)
 
     class Meta:
         ordering = ['dateTime']

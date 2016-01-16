@@ -63,6 +63,3 @@ class AllMoviesSeen(TemplateView):
         }
 
         return render(request, self.template_name, context_dict)
-
-       
-        
