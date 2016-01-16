@@ -1,5 +1,8 @@
 {% extends 'layout.html' %}
 {% block content %}
 hello world! <strong>{{ boldmessage }}</strong><br />
+<a href="{% url 'AddToWatchlist' pk=1 %}" type="submit" name="simulate">Simulate Watchlist</a>
+<a href="{% url 'MoviesSeen' %}" name="moviesSeen">My Watchlist</a><br />
+<strong>{{ nume }}  {{ genre }}{{duration}}</strong> 
 {{ commentform.as_p }}
 {% endblock %}

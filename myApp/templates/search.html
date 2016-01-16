@@ -1,4 +1,10 @@
 {% extends 'layout.html' %}
 {% block content %}
-
+<ul>
+{% for movie in movies %}
+	<li>
+		<b>{{ movie.nume }}</b>: {{ movie.durata }}
+	</li>
+{% endfor %}
+</ul>
 {% endblock %}
