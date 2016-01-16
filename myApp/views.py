@@ -56,6 +56,7 @@ class SimulateWatchlist(TemplateView):
     template_name = 'index.html'
 
     def get(self, request, pk):
+
         movie = Movie.objects.get(pk=pk)
         user = request.user
 
@@ -74,19 +75,17 @@ class SimulateWatchlist(TemplateView):
 
 
 class AllMoviesSeen(TemplateView):
-    template_name = 'index.html'
+
+    template_name = 'allMoviesSeen.html'
 
     def get(self, request):
-
         user = request.user
-
         movies = WatchList.objects.get(user=user)
-
-        movieSeen = movies.movie
+        movies=WatchList.objects.filter(user=user).all()
         context_dict = {
             'nume': movieSeen.name,
             'genre': movieSeen.genre,
-            'duration': movieSeen.duration
+            'duration': movieSeen.duration,
+            'movies' : movies
         }
-
         return render(request, self.template_name, context_dict)
