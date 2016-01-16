@@ -15,12 +15,15 @@
 			<div class="row">
 				<b>{{ movie.name }}</b>
 			</div>
-			<div class="row">
+			<div class="list-group">
 				<div>
-					<a href="/simulate/{{movie.imdbId}}?name={{movie.name}}">Watchlist</a>
+					<a class="list-group-item" style="border:0px" href="/simulate/{{movie.imdbId}}?name={{movie.name}}">Add to Watchlist</a>
 				</div>
 				<div>
-					<a href="/addtowishlist/{{movie.imdbId}}?name={{movie.name}}">Wishlist</a>
+					<a class="list-group-item" style="border:0px" href="/addtowishlist/{{movie.imdbId}}?name={{movie.name}}">Add to Wishlist</a>
+				</div>
+				<div>
+					<a class="list-group-item" style="border:0px" href="http://www.imdb.com/title/tt{{movie.imdbId}}">iMDB link</a>
 				</div>
 			</div>
 		</div>
