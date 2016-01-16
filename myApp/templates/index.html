@@ -2,9 +2,7 @@
 {% block content %}
 hello world! <strong>{{ boldmessage }}</strong><br />
 <a href="{% url 'AddToWatchlist' pk=1 %}" type="submit" name="simulate">Add To Watchlist</a><br/>
-<a href="{% url 'MoviesSeen' %}" name="moviesSeen">My Watchlist</a><br />
 <a href="{% url 'AddToWishlist' pk=2 %}" name="addtowishlist">Add to my Wishlist</a><br />
-<a href="{% url 'wishlist' %}" name="wishlist">My wishlist</a><br />
 
 <div id="masonry" class="row grid">
 {% for movie in movies %}
